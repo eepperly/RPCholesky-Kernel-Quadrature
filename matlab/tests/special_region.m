@@ -1,4 +1,5 @@
 % Test of RPCholesky kernel quadrature on moon-shaped region
+addpath('..')
 close all
 rho = 2;
 k = @(x,y) (1+sqrt(5)*norm(x-y)/rho+5*norm(x-y)^2/3/rho^2)...
