@@ -65,7 +65,12 @@ import math, scipy
 import sklearn
 import csv
 import gurobipy as gp
+import os.path
 
+new_path = "../../matlab/tests/pwkq"
+if not os.path.exists(new_path):
+    os.makedirs(new_path)
+    
 def gen_params(n):
     return np.random.rand(n, d_global)
 
@@ -458,7 +463,7 @@ for fname, d in zip(fnames, ds):
                 trial_idx += 1
                 if trial_idx == num_trials:
                     trial_idx = 0
-                    scipy.io.savemat("../../matlab/tests/pwkq_{}_{}.mat".format(d, length), {"pts" : pts, "weights" : weights})
+                    scipy.io.savemat("../../matlab/tests/pwkq/{}_{}.mat".format(d, length), {"pts" : pts, "weights" : weights})
                     lengths_idx += 1
                     if lengths_idx == len(lengths):
                         lengths_idx = 0
@@ -482,7 +487,7 @@ for fname, d in zip(fnames, ds):
             trial_idx += 1
             if trial_idx == num_trials:
                 trial_idx = 0
-                scipy.io.savemat("../../matlab/tests/pwkq_{}_{}_times.mat".format(d, lengths[lengths_idx]), {"times" : times})
+                scipy.io.savemat("../../matlab/tests/pwkq/{}_{}_times.mat".format(d, lengths[lengths_idx]), {"times" : times})
                 lengths_idx += 1
                 if lengths_idx == len(lengths):
                     lengths_idx = 0

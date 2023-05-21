@@ -77,6 +77,10 @@ import pickle as pkl
 from goodpoints import kt, compress
 from functools import partial
 
+new_path = "../../matlab/tests/thinning"
+if not os.path.exists(new_path):
+    os.makedirs(new_path)
+
 def gen_params(n):
     return np.random.rand(n, d_global)
 
@@ -244,7 +248,7 @@ with open(fname, "r") as myfile:
         trial_idx += 1
         if trial_idx == num_trials:
             trial_idx = 0
-            scipy.io.savemat("../../matlab/tests/thinning_{}_{}.mat".format(d, length), {"pts" : pts})
+            scipy.io.savemat("../../matlab/tests/thinning/{}_{}.mat".format(d, length), {"pts" : pts})
             lengths_idx += 1
             if lengths_idx == len(lengths):
                 lengths_idx = 0
@@ -274,7 +278,7 @@ for fname, d in zip(fnames, ds):
                 trial_idx += 1
                 if trial_idx == num_trials:
                     trial_idx = 0
-                    scipy.io.savemat("../../matlab/tests/thinning_{}_{}.mat".format(d, length), {"pts" : pts})
+                    scipy.io.savemat("../../matlab/tests/thinning/{}_{}.mat".format(d, length), {"pts" : pts})
                     lengths_idx += 1
                     if lengths_idx == len(lengths):
                         lengths_idx = 0
@@ -297,7 +301,7 @@ for fname, d in zip(fnames, ds):
             trial_idx += 1
             if trial_idx == num_trials:
                 trial_idx = 0
-                scipy.io.savemat("../../matlab/tests/thinning_{}_{}_times.mat".format(d, lengths[lengths_idx]), {"times" : times})
+                scipy.io.savemat("../../matlab/tests/thinning/{}_{}_times.mat".format(d, lengths[lengths_idx]), {"times" : times})
                 lengths_idx += 1
                 if lengths_idx == len(lengths):
                     lengths_idx = 0
