@@ -47,7 +47,7 @@ methods = { {@iid_sample,@uniform_weights,'Monte Carlo'},...
             {@rpcholesky_opt,@optimal_weights, 'RPCholesky (Ours)'} };
 all_errors = cell(size(methods));
 
-trials = 2;
+trials = 100;
 ns = 10:10:100;
 f = @(x,y) sin(x)*exp(y);
 
