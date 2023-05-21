@@ -62,7 +62,7 @@ from matplotlib.pyplot import *
 import matplotlib.pyplot as plt
 import numpy as np
 import time
-import math
+import math, scipy
 import csv
 
 from numpy.lib.arraysetops import unique
@@ -226,3 +226,83 @@ with file:
     write.writerows(Data33)
     
 np.savetxt("d3s3_time.csv", T, delimiter=",")
+
+## Save for MATLAB
+
+fname = "d1s3.csv"
+d = 1
+lengths = [2 ** i for i in range(2,exp_max+1)]
+lengths_idx = 0
+length = lengths[lengths_idx]
+trial_idx = 0
+
+pts = np.zeros((d,length,num_trials))
+
+with open(fname, "r") as myfile:
+    for line in myfile:
+        pts[0,:,trial_idx] = np.array(list(map(float, line.rstrip().split(",")))[1:])
+        trial_idx += 1
+        if trial_idx == num_trials:
+            trial_idx = 0
+            scipy.io.savemat("../../matlab/tests/thinning_{}_{}.mat".format(d, length), {"pts" : pts})
+            lengths_idx += 1
+            if lengths_idx == len(lengths):
+                lengths_idx = 0
+                length = lengths[lengths_idx]
+                break
+            else:
+                print(length)
+                length = lengths[lengths_idx]
+                pts = np.zeros((d,length,num_trials))
+
+ds = [3]
+lengths_idx = 0
+length = lengths[lengths_idx]
+fnames = ["d3s3.csv"]
+pt_idx = 0
+trial_idx = 0
+
+for fname, d in zip(fnames, ds):
+    pts = np.zeros((d,length,num_trials))
+    with open(fname, "r") as myfile:
+        for line in myfile:
+            items = list(map(float, line.rstrip().split(",")[1:]))
+            pts[:,pt_idx,trial_idx] = np.array(items)
+            pt_idx += 1
+            if pt_idx == length:
+                pt_idx = 0
+                trial_idx += 1
+                if trial_idx == num_trials:
+                    trial_idx = 0
+                    scipy.io.savemat("../../matlab/tests/thinning_{}_{}.mat".format(d, length), {"pts" : pts})
+                    lengths_idx += 1
+                    if lengths_idx == len(lengths):
+                        lengths_idx = 0
+                        length = lengths[lengths_idx]
+                        break
+                    else:
+                        print(length)
+                        length = lengths[lengths_idx]
+                        pts = np.zeros((d,length,num_trials))
+                
+fnames = ["d1s3_time.csv","d3s3_time.csv"]
+ds = [1,3]
+lengths_idx = 0
+
+for fname, d in zip(fnames, ds):
+    times = np.zeros((num_trials,))
+    with open(fname, "r") as myfile:
+        for line in myfile:
+            times[trial_idx] = float(line)
+            trial_idx += 1
+            if trial_idx == num_trials:
+                trial_idx = 0
+                scipy.io.savemat("../../matlab/tests/thinning_{}_{}_times.mat".format(d, lengths[lengths_idx]), {"times" : times})
+                lengths_idx += 1
+                if lengths_idx == len(lengths):
+                    lengths_idx = 0
+                    break
+                else:
+                    print(lengths_idx, d)
+                    times = np.zeros((num_trials,))
+                

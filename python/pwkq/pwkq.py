@@ -61,7 +61,7 @@ from matplotlib.pyplot import *
 import matplotlib.pyplot as plt
 import numpy as np
 import time
-import math
+import math, scipy
 import sklearn
 import csv
 import gurobipy as gp
@@ -411,7 +411,7 @@ np.savetxt("N_d1s3_time.csv", T, delimiter=",")
 d_global=3
 s_global=3
 
-N=2
+N=num_trials
 T=[]
 
 for i in range(2,exp_max+1):
@@ -433,3 +433,61 @@ with file:
     write.writerows(Data33)
     
 np.savetxt("N_d3s3_time.csv", T, delimiter=",")
+
+fnames = ["N_d1s3.csv", "N_d3s3.csv"]
+ds = [1,3]
+lengths = [2**i for i in range(2,exp_max+1)]
+lengths_idx = 0
+length = lengths[lengths_idx]
+pt_idx = 0
+trial_idx = 0
+
+for fname, d in zip(fnames, ds):
+    pts = np.zeros((d,length,num_trials))
+    weights = np.zeros((length,num_trials))
+    with open(fname, "r") as myfile:
+        for line in myfile:
+            print(line)
+            print(d,pt_idx,trial_idx)
+            items = list(map(float, line.rstrip().split(",")[1:]))
+            pts[:,pt_idx,trial_idx] = np.array(items[:-1])
+            weights[pt_idx,trial_idx] = items[-1]
+            pt_idx += 1
+            if pt_idx == length:
+                pt_idx = 0
+                trial_idx += 1
+                if trial_idx == num_trials:
+                    trial_idx = 0
+                    scipy.io.savemat("../../matlab/tests/pwkq_{}_{}.mat".format(d, length), {"pts" : pts, "weights" : weights})
+                    lengths_idx += 1
+                    if lengths_idx == len(lengths):
+                        lengths_idx = 0
+                        length = lengths[lengths_idx]
+                        break
+                    else:
+                        print(length)
+                        length = lengths[lengths_idx]
+                        pts = np.zeros((d,length,num_trials))
+                        weights = np.zeros((length,num_trials))
+
+                    
+fnames = ["N_d1s3_time.csv","N_d3s3_time.csv"]
+lengths_idx = 0
+
+for fname, d in zip(fnames, ds):
+    times = np.zeros((num_trials,))
+    with open(fname, "r") as myfile:
+        for line in myfile:
+            times[trial_idx] = float(line)
+            trial_idx += 1
+            if trial_idx == num_trials:
+                trial_idx = 0
+                scipy.io.savemat("../../matlab/tests/pwkq_{}_{}_times.mat".format(d, lengths[lengths_idx]), {"times" : times})
+                lengths_idx += 1
+                if lengths_idx == len(lengths):
+                    lengths_idx = 0
+                    break
+                else:
+                    print(lengths_idx, d)
+                    times = np.zeros((num_trials,))
+                
