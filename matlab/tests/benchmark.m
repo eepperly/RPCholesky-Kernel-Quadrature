@@ -120,6 +120,11 @@ for d_idx = 1:length(ds)
         legend(method_names,"Location","Southwest")
     end
 
-    saveas(gcf,sprintf('../figs/%dd.fig',d))
-    saveas(gcf,sprintf('../figs/%dd.png',d))
+    figure(d_idx)
+    saveas(gcf,sprintf('../figs/%dd_errors.fig',d))
+    saveas(gcf,sprintf('../figs/%dd_errors.png',d))
+
+    figure(d_idx+length(ds))
+    saveas(gcf,sprintf('../figs/%dd_times.fig',d))
+    saveas(gcf,sprintf('../figs/%dd_times.png',d))
 end
