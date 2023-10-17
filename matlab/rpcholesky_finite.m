@@ -1,4 +1,13 @@
 function S = rpcholesky_finite(data,n,k)
+%RPCHOLESKY_FINITE Select points using randomly pivoted Cholesky from
+%finite dataset using pivoted Cholesky algorithm
+%   Inputs:
+%   - data: data stored as a |X| * d array
+%   - n: number of points to select
+%   - k: kernel function
+%   Outputs:
+%   - S: a 1*n matrix of the indices of the selected points
+
 N = size(data, 1);
 F = zeros(N,n);
 S = zeros(1,n);
