@@ -1,6 +1,6 @@
 # Kernel Quadrature with Randomly Pivoted Cholesky
 
-This repository contains code for the paper "Kernel Quadrature with Randomly Pivoted Cholesky" by Ethan N. Epperly and Elvira Moreno Ferreira.
+This repository contains code for the paper [_Kernel Quadrature with Randomly Pivoted Cholesky_](https://arxiv.org/abs/2306.03955) by [Ethan N. Epperly](https://ethanepperly.com) and [Elvira Moreno Ferreira](https://www.cms.caltech.edu/people/elvira-moreno-ferreira).
 
 ## Randomly Pivoted Cholesky
 
@@ -44,6 +44,7 @@ Our experiments can be ran as follows:
 
 - Figure 1: Run the code `matlab/tests/special_region.m`.
 - Figure 2: Run the code `matlab/tests/benchmark.m`. To add thinning and PWKQ results, run `thinning.py` and `pwkq.py` scripts in `python/pwkq/`. Then run `matlab/tests/add_to_benchmark.m` to add these results to the graphs.
+- Figure 3: First, run `python/qm9/setup.sh` to generate the necessary data file `matlab/tests/qm9.mat`. Then run the code `matlab/tests/chemistry_application.m`.
 
 ## How to Use Our Code
 
