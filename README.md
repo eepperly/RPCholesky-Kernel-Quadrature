@@ -1,6 +1,6 @@
 # Kernel Quadrature with Randomly Pivoted Cholesky
 
-This repository contains code for the paper [_Kernel Quadrature with Randomly Pivoted Cholesky_](https://arxiv.org/abs/2306.03955) by [Ethan N. Epperly](https://ethanepperly.com) and [Elvira Moreno Ferreira](https://www.cms.caltech.edu/people/elvira-moreno-ferreira).
+This repository contains code for the paper [_Kernel Quadrature with Randomly Pivoted Cholesky_](https://arxiv.org/abs/2306.03955) by [Ethan N. Epperly](https://ethanepperly.com) and [Elvira Moreno Ferreira](https://sites.google.com/view/elviramorenof/home).
 
 ## Randomly Pivoted Cholesky
 
